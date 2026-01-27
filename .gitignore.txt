@@ -1,0 +1,9 @@
+# Database dumps (optional – keep if needed)
+# agmsdb.sql
+
+# XAMPP / local config
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
