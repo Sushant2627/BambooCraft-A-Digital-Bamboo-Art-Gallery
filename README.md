@@ -1,9 +1,8 @@
-# 🎨 Art Gallery Management System (AGMS)
+# 🎨 BambooCraft – A Digital Bamboo Art Gallery
 
-The **Art Gallery Management System (AGMS)** is a web-based application developed using **PHP and MySQL** to manage art products, users, enquiries, and purchases efficiently.  
+The **BambooCraft – A Digital Bamboo Art Gallery** is a web-based application developed using **PHP and MySQL** to manage art products, users, enquiries, and purchases efficiently.  
 It allows art galleries to showcase artworks online while enabling users to browse, search, and interact with available art pieces.
 
-This project was developed as a **team project** and is maintained on GitHub for version control and resume purposes.
 
 ---
 
