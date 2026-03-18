@@ -3,54 +3,52 @@
             <div class="info-top-grid">
                <div class="info-contact-agile">
                 <?php
+                if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Calculate cart count
+$cartCount = 0;
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $cartCount += $item['qty'];
+    }
+}
 
 $ret=mysqli_query($con,"select * from tblpage where PageType='contactus' ");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
 ?>
-<style>
-/* Art Type dropdown hover effect */
-.dropdown-menu {
-    border-radius: 6px;
-    padding: 5px 0;
-}
 
-.dropdown-menu .dropdown-item {
-    padding: 10px 18px;
-    font-size: 15px;
-    color: #333;
-    transition: all 0.25s ease;
-}
 
-.dropdown-menu .dropdown-item:hover {
-    background-color: #e91e63;   /* Professional pink */
-    color: #ffffff;
-    font-weight: 600;
-}
-</style>
+                 <ul class="contact-info">
+    <li>
+        <span class="fas fa-phone-volume"></span>
+        <p><?php echo $row['MobileNumber']; ?></p>
+    </li>
 
-                  <ul>
-                     <li>
-                        <span class="fas fa-phone-volume"></span>
-                        <p><?php  echo $row['MobileNumber'];?></p>
-                     </li>
-                     <li>
-                        <span class="fas fa-envelope"></span>
-                        <p><?php  echo $row['Email'];?></p>
-                     </li>
-                     <li>
-                     </li>
-                  </ul><?php } ?>
+    <li>
+        <span class="fas fa-envelope"></span>
+        <p><?php echo $row['Email']; ?></p>
+    </li>
+</ul><?php } ?>
                </div>
             </div>
             <div class="container-fluid">
-               <div class="hedder-up row">
-                  <div class="col-lg-3 col-md-3 logo-head">
-                     <h1><a class="navbar-brand" href="index.php">Bamboo Art Gallery</a></h1>
-                  </div>
-               </div>
-            </div>
+  <div class="hedder-up row align-items-center py-3">
+    <div class="col-lg-3 col-md-3 logo-head">
+      <h1 class="m-0">
+        <a class="navbar-brand" href="index.php">
+<i class="fa fa-leaf" style="color:#2f7d32; margin-right:5px;"></i>
+<span class="brand-main">BambooCraft</span>
+          <span class="brand-sub"> – A Digital Bamboo Art Gallery</span>
+        </a>
+      </h1>
+    </div>
+  </div>
+</div>
+
             <nav class="navbar navbar-expand-lg navbar-light">
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
@@ -88,34 +86,50 @@ while ($row=mysqli_fetch_array($ret)) {
 
    <!-- Cart -->
    <li class="nav-item">
-      <a href="cart.php" class="nav-link">
-         🛒 Cart
-      </a>
-   </li>
+   <a href="cart.php" class="nav-link">
+      🛒 Cart (<span id="cart-count"><?php echo $cartCount; ?></span>)
+   </a>
+</li>
 
-   <!-- Orders (only after login) -->
-   <?php if(isset($_SESSION['userid'])) { ?>
-      <li class="nav-item">
-         <a href="orders.php" class="nav-link">
-            📦 My Orders
-         </a>
-      </li>
-   <?php } ?>
+   
+
+
+   
 
    <li class="nav-item">
       <a href="contact.php" class="nav-link">Contact</a>
    </li>
 
-   <!-- Login / Logout -->
-   <?php if(!isset($_SESSION['userid'])) { ?>
-      <li class="nav-item">
-         <a href="login.php" class="nav-link">Login</a>
-      </li>
-   <?php } else { ?>
-      <li class="nav-item">
-         <a href="logout.php" class="nav-link">Logout</a>
-      </li>
-   <?php } ?>
+   <li class="nav-item">
+      <a href="art-enquiry.php" class="nav-link">Enquiry</a>
+   </li>
+
+<?php if(!isset($_SESSION['userid'])) { ?>
+
+   <li class="nav-item">
+      <a href="login.php" class="nav-link">Login</a>
+   </li>
+
+<?php } else { ?>
+
+   <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="profileDropdown"
+         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         👤 My Account
+      </a>
+
+      <div class="dropdown-menu">
+         <a class="dropdown-item" href="profile.php">👤 My Profile</a>
+         <a class="dropdown-item" href="orders.php">📦 My Orders</a>
+         <div class="dropdown-divider"></div>
+         <a class="dropdown-item text-danger" href="logout.php"> 🔴 Logout
+</a>
+      </div>
+   </li>
+
+<?php } ?>
+
+
 
    <li class="nav-item">
       <a href="admin/login.php" class="nav-link">Admin</a>
@@ -162,4 +176,58 @@ while ($row=mysqli_fetch_array($ret)) {
             </div>
          </div>
       </div>
-      <!-- //Modal 1-->
+      <!-- //Modal 1--> 
+       <style>
+.logo-head .navbar-brand {
+    font-family: 'Poppins', sans-serif ;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+
+.brand-main {
+    color: #2f7d32;   /* Bamboo green for main brand */
+}
+
+.brand-sub {
+    color: #989696;       /* Dark gray for subtitle */
+    font-weight: 400;
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+/* Art Type dropdown hover effect */
+.dropdown-menu {
+    border-radius: 6px;
+    padding: 5px 0;
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 10px 18px;
+    font-size: 15px;
+    color: #333;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #e91e63;   /* Professional pink */
+    color: #ffffff;
+    font-weight: 600;
+}
+.contact-info {
+    display: flex;
+    justify-content: flex-end; /* moves content to right */
+    gap: 30px;
+}
+
+.contact-info li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.contact-info span {
+    margin-right: 8px;
+    color: #2c7a7b;
+}
+</style>

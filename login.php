@@ -28,7 +28,7 @@ if(isset($_POST['login']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>User Login | Bamboo Art Gallery</title>
+  <title>User Login | BambooCraft – A Digital Bamboo Art Gallery</title>
 
   <link href="admin/css/bootstrap.min.css" rel="stylesheet">
   <link href="admin/css/bootstrap-theme.css" rel="stylesheet">
@@ -58,6 +58,11 @@ placeholder="Email" required>
 <input type="password" class="form-control" name="password"
 placeholder="Password" required>
 </div>
+
+<span class="pull-right">
+  <a href="forgot-password.php">Forgot Password?</a>
+</span>
+
 
 <button class="btn btn-primary btn-lg btn-block" 
 type="submit" name="login">

@@ -7,7 +7,7 @@ include('includes/dbconnection.php');
 <html lang="zxx">
 
    <head>
-      <title>Bamboo Art Gallery | Single Product</title>
+      <title>BambooCraft – A Digital Bamboo Art Gallery | Single Product</title>
       <style>
 /* Cart & Enquiry Button Styling */
 .occasion-cart {
@@ -191,10 +191,11 @@ while ($row=mysqli_fetch_array($ret)) {
 
                      <div class="occasion-cart">
 
-    <a href="add-to-cart.php?pid=<?php echo $row['apid']; ?>" 
-       class="btn add-cart-btn">
-        🛒 Add to Cart
-    </a>
+   <button type="button"
+        class="btn add-cart-btn"
+        data-id="<?php echo $row['apid']; ?>">
+    🛒 Add to Cart
+</button>
 
     <a href="art-enquiry.php?eid=<?php echo $row['apid']; ?>" 
        class="btn btn-success">
@@ -353,5 +354,24 @@ while ($row=mysqli_fetch_array($ret)) {
       <!--bootstrap working-->
       <script src="js/bootstrap.min.js"></script>
       <!-- //bootstrap working--> 
+       <script>
+document.querySelectorAll('.add-cart-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        let pid = this.dataset.id;
+
+        fetch('add-to-cart.php', {
+            method: 'POST',
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'pid=' + pid
+        })
+        .then(res => res.text())
+        .then(count => {
+            document.getElementById('cart-count').innerText = count;
+            alert('Added to cart ✅');
+        });
+    });
+});
+</script>
+
    </body>
 </html>

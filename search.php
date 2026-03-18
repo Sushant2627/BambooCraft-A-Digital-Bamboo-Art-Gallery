@@ -7,7 +7,7 @@ include('includes/dbconnection.php');
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
-      <title>Bamboo Art Gallery | Product Page</title>
+      <title>BambooCraft – A Digital Bamboo Art Gallery | Product Page</title>
       
       <script>
          addEventListener("load", function () {

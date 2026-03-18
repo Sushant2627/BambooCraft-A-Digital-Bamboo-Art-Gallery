@@ -4,9 +4,8 @@ $con = mysqli_connect("localhost", "root", "", "agmsdb", 3305);
 
 // Check connection
 if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("Database connection failed: " . mysqli_connect_error());
 }
 
-// Connection successful
-echo "Connected successfully!";
+// ❌ DO NOT echo anything here
 ?>

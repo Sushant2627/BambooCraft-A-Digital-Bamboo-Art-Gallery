@@ -27,7 +27,7 @@ echo "<script>window.location.href='index.php'</script>";
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
-      <title>Bamboo Art Gallery | Art Enquiry</title>
+      <title>BambooCraft – A Digital Bamboo Art Gallery | Art Enquiry</title>
       
       <script>
          addEventListener("load", function () {

@@ -6,7 +6,7 @@ include('includes/dbconnection.php');
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
-      <title>Bamboo Art Gallery | Home Page</title>
+      <title>BambooCraft – A Digital Bamboo Art Gallery| Home Page</title>
       
       <script>
          addEventListener("load", function () {
@@ -37,6 +37,11 @@ include('includes/dbconnection.php');
       <!--//stylesheets-->
       <link href="//fonts.googleapis.com/css?family=Sunflower:500,700" rel="stylesheet">
       <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+
+
+
    </head>
    <body>
       <?php include_once('includes/header.php');?>

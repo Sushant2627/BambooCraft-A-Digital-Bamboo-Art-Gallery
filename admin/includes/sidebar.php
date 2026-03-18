@@ -8,18 +8,6 @@
                           <span>Dashboard</span>
                       </a>
           </li>
-          <li>
-    <a class="" href="register.php">
-        <i class="icon_profile"></i>
-        <span>Register</span>
-    </a>
-</li>
-<li>
-    <a class="" href="login.php">
-        <i class="icon_key_alt"></i>
-        <span>Login</span>
-    </a>
-</li>
 
           <li class="sub-menu">
             <a href="javascript:;" class="">
@@ -66,6 +54,18 @@
         <li><a class="" href="manage-art-product.php">Manage Product</a></li>
     </ul>
 </li>
+
+<li class="sub-menu">
+    <a href="javascript:;" class="">
+        <i class="icon_cart_alt"></i>
+        <span>Orders</span>
+        <span class="menu-arrow arrow_carrot-right"></span>
+    </a>
+    <ul class="sub">
+        <li><a class="" href="manage-orders.php">Manage Orders</a></li>
+    </ul>
+</li>
+
 
           <li class="sub-menu">
             <a href="javascript:;" class="">

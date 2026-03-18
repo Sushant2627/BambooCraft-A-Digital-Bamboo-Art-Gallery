@@ -2,41 +2,44 @@
 session_start();
 include('includes/dbconnection.php');
 
-if (!isset($_GET['pid'])) {
-    header("Location: index.php");
+if (!isset($_POST['pid'])) {
     exit();
 }
 
-$pid = intval($_GET['pid']);
+$pid = intval($_POST['pid']);
 
 // Fetch product details
-$query = mysqli_query($con, "SELECT ID, Title, SellingPricing, Image FROM tblartproduct WHERE ID='$pid'");
+$query = mysqli_query(
+    $con,
+    "SELECT ID, Title, SellingPricing, Image 
+     FROM tblartproduct 
+     WHERE ID='$pid'"
+);
+
 $product = mysqli_fetch_assoc($query);
 
 if (!$product) {
-    header("Location: index.php");
     exit();
 }
 
-// Initialize cart if not exists
+// Initialize cart
 if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = array();
+    $_SESSION['cart'] = [];
 }
 
-// If product already in cart → increase quantity
+// Add / Update product
 if (isset($_SESSION['cart'][$pid])) {
     $_SESSION['cart'][$pid]['qty'] += 1;
 } else {
-    $_SESSION['cart'][$pid] = array(
+    $_SESSION['cart'][$pid] = [
         'id'    => $product['ID'],
         'title' => $product['Title'],
         'price' => $product['SellingPricing'],
         'image' => $product['Image'],
         'qty'   => 1
-    );
+    ];
 }
 
-// Redirect to cart page
-header("Location: cart.php");
+// Return updated cart count (AJAX response)
+echo array_sum(array_column($_SESSION['cart'], 'qty'));
 exit();
-?>

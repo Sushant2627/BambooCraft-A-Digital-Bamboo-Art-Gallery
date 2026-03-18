@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3305
--- Generation Time: Mar 24, 2025 at 06:35 AM
+-- Generation Time: Mar 05, 2026 at 03:33 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -225,7 +225,35 @@ CREATE TABLE `tblenquiry` (
 
 INSERT INTO `tblenquiry` (`ID`, `EnquiryNumber`, `Artpdid`, `FullName`, `Email`, `MobileNumber`, `Message`, `EnquiryDate`, `Status`, `AdminRemark`, `AdminRemarkdate`) VALUES
 (1, '230873611', 4, 'Anuj Patil', 'ak@test.com', 1234567890, 'This is for testing Purpose.', '2025-02-26 18:16:40', 'Answer', 'test purpose', '2025-02-26 18:17:15'),
-(2, '227883179', 5, 'Amit Patil', 'amitk55@test.com', 1234434321, 'I want this painting', '2025-02-26 18:16:40', 'Answer', 'testing purpose', '2025-02-26 18:17:58');
+(2, '227883179', 5, 'Amit Patil', 'amitk55@test.com', 1234434321, 'I want this painting', '2025-02-26 18:16:40', 'Answer', 'testing purpose', '2025-02-26 18:17:58'),
+(5, '448461408', 7, 'Supriya Nivgire', 'supriya1902@gmail.com', 9876543210, 'Is this available?', '2026-03-04 13:33:26', NULL, '', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblorders`
+--
+
+CREATE TABLE `tblorders` (
+  `ID` int(11) NOT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `OrderNumber` varchar(50) DEFAULT NULL,
+  `ProductID` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `TotalAmount` decimal(10,2) DEFAULT NULL,
+  `OrderStatus` varchar(50) DEFAULT 'Pending',
+  `OrderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CancelledBy` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblorders`
+--
+
+INSERT INTO `tblorders` (`ID`, `UserID`, `OrderNumber`, `ProductID`, `Quantity`, `TotalAmount`, `OrderStatus`, `OrderDate`, `CancelledBy`) VALUES
+(14, 2, '501528300', 26, 1, '2000.00', 'Cancelled', '2026-03-04 13:23:37', 'User'),
+(15, 2, '501528300', 46, 2, '2000.00', 'Processing', '2026-03-04 13:23:37', NULL),
+(16, 2, '464202751', 2, 3, '450.00', 'Pending', '2026-03-04 13:25:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -249,8 +277,34 @@ CREATE TABLE `tblpage` (
 --
 
 INSERT INTO `tblpage` (`ID`, `PageType`, `PageTitle`, `PageDescription`, `Email`, `MobileNumber`, `UpdationDate`, `Timing`) VALUES
-(1, 'aboutus', 'About Us', '<span style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\">\r\n    Bamboo Art Gallery is \r\n</span>\r\n<b style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\">\r\n    a dedicated space for showcasing and selling handcrafted bamboo artworks\r\n</b>\r\n<span style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\">\r\n    . It supports bamboo artists by providing a platform to exhibit their creations while offering buyers a seamless experience in discovering eco-friendly art pieces.\r\n</span>\r\n', NULL, NULL, NULL, ''),
+(1, 'aboutus', 'About Us', '<span style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\"><b>\r\n    BambooCraft - A Digital Bamboo Art Gallery</b> is \r\n</span>\r\n<span style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\">\r\n    a dedicated space for showcasing and selling handcrafted bamboo artworks</span><span style=\"color: rgb(32, 33, 36); font-family: Arial, sans-serif; font-size: 16px;\">. It supports bamboo artists by providing a platform to exhibit their creations while offering buyers a seamless experience in discovering eco-friendly art pieces.\r\n</span>\r\n', NULL, NULL, NULL, ''),
 (2, 'contactus', 'Contact Us', '2437 C WARD, Burud Galli, near MARUTI MANDIR, Shaniwar Peth', 'info@gmail.com', 1234567890, NULL, '10:30 am to 7:30 pm');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblusers`
+--
+
+CREATE TABLE `tblusers` (
+  `ID` int(11) NOT NULL,
+  `FullName` varchar(100) DEFAULT NULL,
+  `Email` varchar(100) DEFAULT NULL,
+  `Password` varchar(255) DEFAULT NULL,
+  `RegDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MobileNumber` varchar(15) DEFAULT NULL,
+  `Address` text,
+  `City` varchar(100) DEFAULT NULL,
+  `State` varchar(100) DEFAULT NULL,
+  `Pincode` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblusers`
+--
+
+INSERT INTO `tblusers` (`ID`, `FullName`, `Email`, `Password`, `RegDate`, `MobileNumber`, `Address`, `City`, `State`, `Pincode`) VALUES
+(2, 'Supriya Nivgire', 'supriya1902@gmail.com', 'fc4ddc15f9f4b4b06ef7844d6bb53abf', '2026-03-04 13:22:34', '9876543210', 'A/p Sadawarvadi, Tal-Chandgad, Dist-Kolhapur', 'KOLHAPUR', 'MAHARASHTRA', '416552');
 
 --
 -- Indexes for dumped tables
@@ -295,10 +349,23 @@ ALTER TABLE `tblenquiry`
   ADD KEY `CardId` (`Artpdid`);
 
 --
+-- Indexes for table `tblorders`
+--
+ALTER TABLE `tblorders`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tblpage`
 --
 ALTER TABLE `tblpage`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tblusers`
+--
+ALTER TABLE `tblusers`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Email` (`Email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -338,13 +405,25 @@ ALTER TABLE `tblarttype`
 -- AUTO_INCREMENT for table `tblenquiry`
 --
 ALTER TABLE `tblenquiry`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tblorders`
+--
+ALTER TABLE `tblorders`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tblpage`
 --
 ALTER TABLE `tblpage`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tblusers`
+--
+ALTER TABLE `tblusers`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,7 +7,7 @@ include('includes/dbconnection.php');
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
-      <title>Bamboo Art Gallery | About Us Page</title>
+      <title>BambooCraft – A Digital Bamboo Art Gallery | About Us Page</title>
     
       <script>
          addEventListener("load", function () {
@@ -73,7 +73,7 @@ while ($row=mysqli_fetch_array($ret)) {
                </div>
             </div>
             <div class="about-sub-inner text-center mt-lg-4 mt-3">
-               <h4>Bamboo Art Gallery
+               <h4>BambooCraft – A Digital Bamboo Art Gallery
                </h4>
                <div class="row">
                   <div class="col-lg-4 col-md-4 abut-gride">

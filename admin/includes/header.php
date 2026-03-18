@@ -15,7 +15,7 @@ $name=$row['AdminName'];
 
 ?>
       <!--logo start-->
-      <a href="dashboard.php" class="logo"><span class="lite"><strong> BAMBOO ART GALLERY | Admin</strong></span></a>
+      <a href="dashboard.php" class="logo"><span class="lite"><strong> BambooCraft – A Digital Bamboo Art Gallery | Admin</strong></span></a>
       <!--logo end-->
 
       
@@ -48,7 +48,7 @@ while ($row1=mysqli_fetch_array($ret1)) { ?>
        <li>
                 <a href="view-enquiry-detail.php?viewid=<?php echo $row1['ID'];?>">
                                     <span class="label label-primary"><i class="icon_profile"></i></span>
-                                    New Enquiry <?php echo $row1['FullName'];?>
+                                    New Enquiry By <?php echo $row1['FullName'];?>
                                     <span class="small italic pull-right"></span>
                                 </a>
               </li>

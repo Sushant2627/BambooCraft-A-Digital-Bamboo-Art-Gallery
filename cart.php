@@ -3,21 +3,132 @@ session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
 
-// Remove item
-if (isset($_GET['remove'])) {
-    $rid = intval($_GET['remove']);
-    unset($_SESSION['cart'][$rid]);
+/* ======================
+   INCREASE QUANTITY
+====================== */
+if (isset($_GET['inc'])) {
+    $pid = intval($_GET['inc']);
+
+    if (isset($_SESSION['cart'][$pid])) {
+        $_SESSION['cart'][$pid]['qty'] += 1;
+    }
+
     header("Location: cart.php");
     exit();
 }
+
+/* ======================
+   DECREASE QUANTITY
+====================== */
+if (isset($_GET['dec'])) {
+    $pid = intval($_GET['dec']);
+
+    if (isset($_SESSION['cart'][$pid])) {
+        if ($_SESSION['cart'][$pid]['qty'] > 1) {
+            $_SESSION['cart'][$pid]['qty'] -= 1;
+        } else {
+            unset($_SESSION['cart'][$pid]); // remove if qty = 1
+        }
+    }
+
+    header("Location: cart.php");
+    exit();
+}
+
+/* ======================
+   REMOVE PRODUCT
+====================== */
+if (isset($_GET['remove'])) {
+    $pid = intval($_GET['remove']);
+    unset($_SESSION['cart'][$pid]);
+    header("Location: cart.php");
+    exit();
+}
+
+
+/* ======================
+   CHECKOUT PROCESS
+====================== */
+if (isset($_POST['checkout'])) {
+
+    if (!isset($_SESSION['userid'])) {
+        echo "<script>alert('Please login first');location='login.php'</script>";
+        exit();
+    }
+
+    if (empty($_SESSION['cart'])) {
+        echo "<script>alert('Cart is empty');</script>";
+        exit();
+    }
+
+    $userid = $_SESSION['userid'];
+    $orderNumber = rand(100000000, 999999999);
+
+    $success = true; // track insert status
+
+   foreach ($_SESSION['cart'] as $item) {
+
+    $productID = $item['id'];      // IMPORTANT
+    $quantity  = $item['qty'];     // IMPORTANT
+    $price     = $item['price'];
+    $total     = $price * $quantity;
+
+    $insert = mysqli_query($con,
+        "INSERT INTO tblorders 
+        (UserID, OrderNumber, ProductID, Quantity, TotalAmount, OrderStatus) 
+        VALUES 
+        ('$userid','$orderNumber','$productID','$quantity','$total','Pending')"
+    );
+
+    if(!$insert){
+        die(mysqli_error($con));
+    }
+}
+
+
+    if ($success) {
+        unset($_SESSION['cart']);
+        echo "<script>
+            alert('Order placed successfully!');
+            location='orders.php';
+        </script>";
+    } else {
+        echo "<script>alert('Order failed');</script>";
+    }
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bamboo Art Gallery | Cart</title>
+    <title>BambooCraft – A Digital Bamboo Art Gallery | Cart</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+     <script>
+         addEventListener("load", function () {
+         	setTimeout(hideURLbar, 0);
+         }, false);
+         
+         function hideURLbar() {
+         	window.scrollTo(0, 1);
+         }
+      </script>
+      <!--//meta tags ends here-->
+      <!--booststrap-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+      <!--//booststrap end-->
+      <!-- font-awesome icons -->
+      <link href="css/fontawesome-all.min.css" rel="stylesheet" type="text/css" media="all">
+      <!-- //font-awesome icons -->
+      <!--Shoping cart-->
+      <link rel="stylesheet" href="css/shop.css" type="text/css" />
+      <!--//Shoping cart-->
+      <!--stylesheets-->
+      <link href="css/style.css" rel='stylesheet' type='text/css' media="all">
+      <!--//stylesheets-->
+      <link href="//fonts.googleapis.com/css?family=Sunflower:500,700" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
 
     <style>
         .cart-table img {
@@ -62,7 +173,7 @@ if (isset($_GET['remove'])) {
     <thead class="thead-dark">
         <tr>
             <th>Image</th>
-            <th>Product</th>
+            <th>Product Name</th>
             <th>Price (₹)</th>
             <th>Qty</th>
             <th>Total (₹)</th>
@@ -80,7 +191,15 @@ if (isset($_GET['remove'])) {
             <td><img src="images/<?php echo $item['image']; ?>"></td>
             <td><?php echo $item['title']; ?></td>
             <td><?php echo $item['price']; ?></td>
-            <td><?php echo $item['qty']; ?></td>
+<td class="text-center">
+    <a href="cart.php?dec=<?php echo $item['id']; ?>"
+       class="btn btn-sm btn-warning">−</a>
+
+    <strong class="mx-2"><?php echo $item['qty']; ?></strong>
+
+    <a href="cart.php?inc=<?php echo $item['id']; ?>"
+       class="btn btn-sm btn-success">+</a>
+</td>
             <td><?php echo $total; ?></td>
             <td>
                 <a href="cart.php?remove=<?php echo $item['id']; ?>" 
@@ -99,7 +218,13 @@ if (isset($_GET['remove'])) {
 
 <div class="text-right mt-3">
     <a href="index.php" class="btn btn-secondary">Continue Shopping</a>
-    <a href="#" class="btn btn-success">Checkout</a>
+
+    <!-- CHECKOUT BUTTON -->
+    <form method="post" style="display:inline;">
+        <button type="submit" name="checkout" class="btn btn-success">
+            Checkout
+        </button>
+    </form>
 </div>
 
 <?php } else { ?>
@@ -116,4 +241,4 @@ if (isset($_GET['remove'])) {
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-</html>
+</html> 

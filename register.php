@@ -30,7 +30,7 @@ if(isset($_POST['register']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>User Registration | Bamboo Art Gallery</title>
+<title>User Registration | BambooCraft – A Digital Bamboo Art Gallery</title>
 
 <link href="admin/css/bootstrap.min.css" rel="stylesheet">
 <link href="admin/css/bootstrap-theme.css" rel="stylesheet">
